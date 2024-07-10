@@ -1,0 +1,26 @@
+package com.service;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MessageProducer {
+
+	@Value("${javatechstack.rabbitmq.exchange}")
+	private String exchange;
+
+	@Value("${javatechstack.rabbitmq.routingkey }")
+	private String routingKey;
+
+	private RabbitTemplate rabbitTemplate;
+
+	//
+	public void produceMessage(String msg) {
+
+		rabbitTemplate.convertAndSend(exchange, routingKey, msg);
+		System.out.println("Sent message: " + msg);
+
+	}
+
+}
